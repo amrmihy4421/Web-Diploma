@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'GET /posts?q=:searchTerm'
+method: GET
+url: '{{baseUrl}}/posts?q={{searchTerm}}'
+order: 4100
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{token}}'

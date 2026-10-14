@@ -1,0 +1,32 @@
+$kind: http-request
+name: 'POST /posts'
+method: POST
+url: '{{baseUrl}}/posts'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{token}}'
+body:
+  type: json
+  content: |-
+    {
+      "title": "Postman blog post",
+      "content": "A post created from Postman"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      const res = pm.response.json();
+      pm.test("Post created", function () {
+          pm.response.to.have.status(201);
+          pm.expect(res.post).to.have.property("id");
+      });
+      if (res.post && res.post.id) {
+          pm.environment.set("postId", String(res.post.id));
+      }

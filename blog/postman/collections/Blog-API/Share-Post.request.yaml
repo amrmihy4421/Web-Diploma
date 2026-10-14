@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'POST /posts/:id/share'
+method: POST
+url: '{{baseUrl}}/posts/{{postId}}/share'
+order: 9000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{token}}'

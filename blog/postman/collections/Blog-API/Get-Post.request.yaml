@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'GET /posts/:id'
+method: GET
+url: '{{baseUrl}}/posts/{{postId}}'
+order: 5000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{token}}'

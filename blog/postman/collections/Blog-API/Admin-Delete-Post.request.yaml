@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'DELETE /admin/posts/:id'
+method: DELETE
+url: '{{baseUrl}}/admin/posts/{{postId}}'
+order: 10000
+auth:
+  type: bearer
+  credentials:
+    - key: adminToken
+      value: '{{adminToken}}'

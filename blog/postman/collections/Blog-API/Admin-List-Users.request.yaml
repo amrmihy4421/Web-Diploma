@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'GET /admin/users'
+method: GET
+url: '{{baseUrl}}/admin/users'
+order: 9900
+auth:
+  type: bearer
+  credentials:
+    - key: adminToken
+      value: '{{adminToken}}'

@@ -1,0 +1,27 @@
+$kind: http-request
+name: 'GET /auth'
+method: GET
+url: '{{baseUrl}}/auth'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{token}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      const res = pm.response.json();
+
+      pm.test("Auth check successful", function () {
+          pm.response.to.have.status(200);
+      });
+
+      pm.test("Response contains user profile fields", function () {
+          pm.expect(res).to.have.property("id");
+          pm.expect(res).to.have.property("username");
+          pm.expect(res).to.have.property("email");
+      });
+
+      console.log("Authenticated user:", JSON.stringify(res));

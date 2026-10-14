@@ -1,0 +1,35 @@
+name: Local
+values:
+  - key: baseUrl
+    value: 'http://localhost:5000'
+    enabled: true
+  - key: token
+    value: ''
+    enabled: true
+  - key: username
+    value: ''
+    enabled: true
+  - key: email
+    value: ''
+    enabled: true
+  - key: password
+    value: ''
+    enabled: true
+  - key: postId
+    value: ''
+    enabled: true
+  - key: commentId
+    value: ''
+    enabled: true
+  - key: userId
+    value: ''
+    enabled: true
+  - key: adminToken
+    value: ''
+    enabled: true
+  - key: searchTerm
+    value: 'postman'
+    enabled: true
+  - key: updatedPostTitle
+    value: 'Updated Postman post'
+    enabled: true

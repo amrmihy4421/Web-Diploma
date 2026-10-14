@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'DELETE /posts/:id/share'
+method: DELETE
+url: '{{baseUrl}}/posts/{{postId}}/share'
+order: 9200
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{token}}'

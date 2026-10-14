@@ -1,0 +1,58 @@
+$kind: http-request
+method: POST
+url: '{{baseUrl}}/register'
+order: 1000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+        "username": "{{username}}",
+        "email": "{{email}}",
+        "password": "{{password}}"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      const res = pm.response.json();
+      const status = pm.response.code;
+
+      // --- Response format ---
+      pm.test("Response is JSON", function () {
+          pm.response.to.have.header("Content-Type", /application\/json/);
+      });
+
+      pm.test("Response time is under 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });
+
+      pm.test("Response body has a message field", function () {
+          pm.expect(res).to.be.an("object");
+          pm.expect(res).to.have.property("message");
+          pm.expect(res.message).to.be.a("string").and.not.empty;
+      });
+
+      // --- 201 Created: new user ---
+      if (status === 201) {
+          pm.test("Status is 201 Created", function () {
+              pm.response.to.have.status(201);
+          });
+
+          pm.test("Success message is correct", function () {
+              pm.expect(res.message).to.eql("User created successfully");
+          });
+      }
+
+      // --- Invalid registration or duplicate account ---
+      if (status === 400 || status === 409) {
+          pm.test("Registration is rejected with a client error", function () {
+              pm.expect([400, 409]).to.include(status);
+          });
+
+          pm.test("Error message is descriptive", function () {
+              pm.expect(res).to.have.property("message");
+          });
+      }

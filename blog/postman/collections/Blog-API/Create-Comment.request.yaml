@@ -1,0 +1,31 @@
+$kind: http-request
+name: 'POST /posts/:id/comments'
+method: POST
+url: '{{baseUrl}}/posts/{{postId}}/comments'
+order: 8000
+headers:
+  - key: Content-Type
+    value: application/json
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{token}}'
+body:
+  type: json
+  content: |-
+    {
+      "content": "A comment created from Postman"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      const res = pm.response.json();
+      pm.test("Comment created", function () {
+          pm.response.to.have.status(201);
+          pm.expect(res.comment).to.have.property("id");
+      });
+      if (res.comment && res.comment.id) {
+          pm.environment.set("commentId", String(res.comment.id));
+      }

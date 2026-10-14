@@ -1,0 +1,19 @@
+$kind: http-request
+name: 'PATCH /posts/:id'
+method: PATCH
+url: '{{baseUrl}}/posts/{{postId}}'
+order: 6000
+headers:
+  - key: Content-Type
+    value: application/json
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{token}}'
+body:
+  type: json
+  content: |-
+    {
+      "title": "{{updatedPostTitle}}"
+    }
